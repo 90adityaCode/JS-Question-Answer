@@ -359,17 +359,12 @@ console.log("Sync call");
 Sync call
 Async call
 ```
- 
-26. What are the pros and cons of using Promises instead of callbacks in JavaScript?
-(Intermediate)
-
-Explanation: Promises provide a cleaner, more manageable way to handle asynchronous code compared to callbacks, avoiding deeply nested "callback hell".
+ 26. What are the pros and cons of using Promises instead of callbacks in JavaScript? (Intermediate)
+Explanation: Promises provide a cleaner, more manageable way to handle asynchronous code compared to callbacks, avoiding deeply nested "callback hell."
 
 Example:
 
-javascript
-Copy
-Edit
+JavaScript
 // Using Promises
 fetch('https://api.example.com')
   .then(response => response.json())
@@ -378,27 +373,19 @@ fetch('https://api.example.com')
 Use Case:
 
 Better error handling and readability for async flows.
-
 Pros:
 
 Avoids callback nesting.
-
 Error handling is streamlined with .catch.
-
 Cons:
 
 Slightly more overhead when learning compared to callbacks.
-
-27. Explain AJAX in as much detail as possible
-(Basic)
-
+27. Explain AJAX in as much detail as possible (Basic)
 Explanation: AJAX (Asynchronous JavaScript and XML) is a technique to send/receive data from a server asynchronously without refreshing the web page.
 
 Example:
 
-javascript
-Copy
-Edit
+JavaScript
 const xhr = new XMLHttpRequest();
 xhr.open('GET', '/api/data');
 xhr.onload = function() {
@@ -407,79 +394,53 @@ xhr.onload = function() {
 xhr.send();
 Use Case:
 
-Load data in background (e.g., search autocomplete).
-
+Load data in the background (e.g., search autocomplete).
 Pros:
 
 Improves user experience.
-
 Partial updates without full page reloads.
-
 Cons:
 
 Increases complexity.
-
 SEO challenges for dynamic content.
-
-28. What are the advantages and disadvantages of using AJAX?
-(Basic)
-
+28. What are the advantages and disadvantages of using AJAX? (Basic)
 Advantages:
 
 Enhances speed and usability.
-
 Allows asynchronous data loading.
-
 Disadvantages:
 
 SEO issues (for SPAs).
-
 Complexity in managing async flows.
-
 CORS issues across domains.
-
-29. What are the differences between XMLHttpRequest and fetch() in JavaScript and browsers?
-(Basic)
-
+29. What are the differences between XMLHttpRequest and fetch() in JavaScript and browsers? (Basic)
 Explanation:
 
-XMLHttpRequest: older, more verbose API.
-
-fetch(): modern Promise-based API for requests.
-
+XMLHttpRequest: Older, more verbose API.
+fetch(): Modern Promise-based API for requests.
 Example:
 
-javascript
-Copy
-Edit
-// fetch
+JavaScript
+// Using fetch
 fetch('/api/data')
   .then(response => response.json())
   .then(data => console.log(data));
 Use Case:
 
 Prefer fetch for simpler, promise-based requests.
-
 Pros of fetch:
 
 Cleaner, promise-based API.
-
 Streamlined response handling.
-
 Cons of fetch:
 
 Requires manual error checking (response.ok).
-
-30. How do you abort a web request using AbortController in JavaScript?
-(Basic)
-
+30. How do you abort a web request using AbortController in JavaScript? (Basic)
 Explanation: AbortController allows you to cancel a fetch request.
 
 Example:
 
-javascript
-Copy
-Edit
+JavaScript
 const controller = new AbortController();
 const signal = controller.signal;
 
@@ -490,17 +451,12 @@ controller.abort(); // Aborts the request
 Use Case:
 
 Useful when a user navigates away from a page before a request completes.
-
-31. What are JavaScript polyfills for?
-(Advanced)
-
+31. What are JavaScript polyfills for? (Advanced)
 Explanation: Polyfills are pieces of code that implement modern features on older browsers that don't natively support them.
 
 Example:
 
-javascript
-Copy
-Edit
+JavaScript
 if (!Array.prototype.includes) {
   Array.prototype.includes = function(element) {
     return this.indexOf(element) !== -1;
@@ -509,76 +465,48 @@ if (!Array.prototype.includes) {
 Use Case:
 
 Ensuring compatibility across older browsers.
-
-32. Why is extending built-in JavaScript objects not a good idea?
-(Intermediate)
-
+32. Why is extending built-in JavaScript objects not a good idea? (Intermediate)
 Explanation: It can cause conflicts and unexpected behavior with other code or future JavaScript versions.
 
 Example:
 
-javascript
-Copy
-Edit
+JavaScript
 Array.prototype.myMethod = function() {}; // Bad practice
 Use Case:
 
 Avoid polluting prototypes.
-
-33. Why is it a good idea to leave the global JavaScript scope untouched?
-(Intermediate)
-
+33. Why is it a good idea to leave the global JavaScript scope untouched? (Intermediate)
 Explanation: Adding global variables can cause name clashes, overwriting important variables or libraries.
 
 Use Case:
 
 Use modules or closures to encapsulate code.
-
-34. Explain the differences between CommonJS modules and ES modules in JavaScript
-(Intermediate)
-
+34. Explain the differences between CommonJS modules and ES modules in JavaScript (Intermediate)
 Explanation:
 
-CommonJS (require, module.exports) — used mainly in Node.js.
-
-ES Modules (import, export) — standard for modern JavaScript.
-
+CommonJS (require, module.exports) — Used mainly in Node.js.
+ES Modules (import, export) — Standard for modern JavaScript.
 Use Case:
 
 Prefer ES Modules in frontend; CommonJS in older Node.js codebases.
-
-35. What are the various data types in JavaScript?
-(Basic)
-
+35. What are the various data types in JavaScript? (Basic)
 Explanation:
 
-Primitive Types: String, Number, Boolean, null, undefined, Symbol, BigInt
-
-Object Types: Object, Array, Function
-
-36. What language constructs do you use for iterating over object properties and array items in JavaScript?
-(Basic)
-
+Primitive Types: String, Number, Boolean, null, undefined, Symbol, BigInt.
+Object Types: Object, Array, Function.
+36. What language constructs do you use for iterating over object properties and array items in JavaScript? (Basic)
 Examples:
 
-Arrays: for, forEach, map, for...of
-
-Objects: for...in, Object.keys()
-
-37. What are the benefits of using spread syntax in JavaScript and how is it different from rest syntax?
-(Basic)
-
+Arrays: for, forEach, map, for...of.
+Objects: for...in, Object.keys().
+37. What are the benefits of using spread syntax in JavaScript and how is it different from rest syntax? (Basic)
 Explanation:
 
-Spread (...) expands elements.
-
-Rest (...) collects elements into an array.
-
+Spread (...): Expands elements.
+Rest (...): Collects elements into an array.
 Example:
 
-javascript
-Copy
-Edit
+JavaScript
 // Spread
 const arr = [1, 2, 3];
 const newArr = [...arr, 4];
@@ -587,136 +515,88 @@ const newArr = [...arr, 4];
 function sum(...nums) {
   return nums.reduce((acc, n) => acc + n, 0);
 }
-38. What are iterators and generators in JavaScript and what are they used for?
-(Advanced)
-
+38. What are iterators and generators in JavaScript and what are they used for? (Advanced)
 Explanation:
 
 Iterator: An object that provides a sequence via next().
-
 Generator: A function that can pause (yield) and resume.
-
 Example:
 
-javascript
-Copy
-Edit
+JavaScript
 function* generator() {
   yield 1;
   yield 2;
 }
 const gen = generator();
 gen.next(); // {value:1, done:false}
-39. Explain the difference between mutable and immutable objects in JavaScript
-(Intermediate)
-
+39. Explain the difference between mutable and immutable objects in JavaScript (Intermediate)
 Explanation:
 
 Mutable: Can be changed (e.g., Objects, Arrays).
-
 Immutable: Cannot be changed once created (e.g., Strings, Numbers).
-
-40. What is the difference between a Map object and a plain object in JavaScript?
-(Basic)
-
+40. What is the difference between a Map object and a plain object in JavaScript? (Basic)
 Explanation:
 
 Map allows keys of any type and preserves insertion order.
-
 Plain object keys are always strings or symbols.
-
-41. What are the differences between Map/Set and WeakMap/WeakSet in JavaScript?
-(Basic)
-
+41. What are the differences between Map/Set and WeakMap/WeakSet in JavaScript? (Basic)
 Explanation:
 
-WeakMap/WeakSet hold weak references — keys must be objects and don't prevent garbage collection.
-
-42. Why might you want to create static class members in JavaScript?
-(Intermediate)
-
+WeakMap/WeakSet hold weak references — Keys must be objects and don't prevent garbage collection.
+42. Why might you want to create static class members in JavaScript? (Intermediate)
 Explanation: Static members belong to the class itself, not instances.
 
 Use Case:
 
 Utility methods (e.g., Math.random()).
-
-43. What are Symbols used for in JavaScript?
-(Intermediate)
-
+43. What are Symbols used for in JavaScript? (Intermediate)
 Explanation: Symbols are unique, immutable identifiers, often used for private object properties.
 
-44. What are server-sent events?
-(Advanced)
-
+44. What are server-sent events? (Advanced)
 Explanation: A way to push updates from server to client over HTTP connection (EventSource API).
 
-45. What are JavaScript object property flags and descriptors?
-(Advanced)
-
+45. What are JavaScript object property flags and descriptors? (Advanced)
 Explanation: Controls property behavior — writable, enumerable, configurable.
 
 Example:
 
-javascript
-Copy
-Edit
+JavaScript
 Object.defineProperty(obj, 'key', {
   writable: false
 });
-46. What are JavaScript object getters and setters for?
-(Intermediate)
-
+46. What are JavaScript object getters and setters for? (Intermediate)
 Explanation: Custom behavior when accessing or setting properties.
 
 Example:
 
-javascript
-Copy
-Edit
+JavaScript
 const obj = {
   get name() { return 'value'; },
   set name(val) { console.log(val); }
 };
-47. What are proxies in JavaScript used for?
-(Advanced)
-
+47. What are proxies in JavaScript used for? (Advanced)
 Explanation: Proxies intercept operations on objects (get, set, etc.).
 
 Use Case:
 
 Validation, debugging, auto-populating properties.
-
-48. What tools and techniques do you use for debugging JavaScript code?
-(Intermediate)
-
+48. What tools and techniques do you use for debugging JavaScript code? (Intermediate)
 Tools:
 
-Chrome DevTools
-
-Console.log
-
-Debugger statement
-
-Breakpoints
-
-Source maps
-
-49. What are workers in JavaScript used for?
-(Advanced)
-
+Chrome DevTools.
+console.log.
+debugger statement.
+Breakpoints.
+Source maps.
+49. What are workers in JavaScript used for? (Advanced)
 Explanation: Workers run scripts in background threads to avoid blocking the main thread.
 
-Example:
+Examples:
 
-Web Workers
-
-Service Workers
-
-50. How does JavaScript garbage collection work?
-(Advanced)
-
-Explanation: Automatic memory management — JS engine frees memory occupied by objects no longer reachable.
+Web Workers.
+Service Workers.
+50. How does JavaScript garbage collection work? (Advanced)
+Explanation: Automatic memory management — JavaScript engine frees memory occupied by objects no longer reachable.
 
 Use Case:
 
