@@ -359,273 +359,302 @@ console.log("Sync call");
 Sync call
 Async call
 ```
-# Q&A Section
+ **26. What are the pros and cons of using Promises instead of callbacks in JavaScript?**
+Explanation:
 
-## Basic Questions
+Promises provide a cleaner, more manageable way to deal with asynchronous operations compared to nested callbacks ("callback hell").
 
-**Q: Explain the difference between synchronous and asynchronous functions in JavaScript**  
-A: Synchronous functions execute code sequentially, meaning each operation must complete before the next one starts. Asynchronous functions allow code execution to continue without waiting for a task to complete, often using callbacks, promises, or async/await syntax.
 
-Example:  
-```javascript
-// Synchronous example
-console.log('Start');
-console.log('Middle');
-console.log('End');
+Aspect	Promises	Callbacks
+Readability	Cleaner, chainable .then()	Nested and harder to read
+Error Handling	Centralized with .catch()	Each callback needs its own
+Chaining Operations	Easy	Hard
+Example:
 
-// Asynchronous example
-console.log('Start');
-setTimeout(() => console.log('Middle'), 1000); // Executes after 1 second
-console.log('End');
-
-##Q: **Explain AJAX in as much detail as possible** **
-A: AJAX (Asynchronous JavaScript and XML) is a technique for creating dynamic web applications. It allows fetching data from a server asynchronously, meaning the web page does not reload or refresh during the data fetch. AJAX uses technologies like XMLHttpRequest or fetch() to send and receive data, often in JSON format.
-
-Example using fetch():
-
-JavaScript
-fetch('https://api.example.com/data')
+javascript
+Copy
+Edit
+// Using Promise
+fetch('/api/data')
   .then(response => response.json())
   .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
-##Q: **What are the differences between XMLHttpRequest and fetch() in JavaScript and browsers?**
-A: XMLHttpRequest is an older API for making HTTP requests, supporting event-based callbacks. fetch() is a modern API that simplifies request handling using promises and provides better readability and error handling.
+  .catch(error => console.error(error));
 
-Example using XMLHttpRequest:
+// Using Callback
+function fetchData(callback) {
+  // simulate API
+  setTimeout(() => callback(null, "Data received"), 1000);
+}
+fetchData((err, data) => {
+  if (err) console.error(err);
+  else console.log(data);
+});
+Use Case:
 
-JavaScript
+Always prefer Promises for clean async operations.
+
+**27. Explain AJAX in as much detail as possible**
+Explanation:
+
+AJAX (Asynchronous JavaScript and XML) allows web pages to communicate with servers asynchronously without reloading the page.
+
+Originally used XML; now JSON is common.
+
+Example:
+
+javascript
+Copy
+Edit
 const xhr = new XMLHttpRequest();
-xhr.open('GET', 'https://api.example.com/data', true);
-xhr.onload = function () {
+xhr.open('GET', '/api/data', true);
+xhr.onload = function() {
   if (xhr.status === 200) {
     console.log(JSON.parse(xhr.responseText));
   }
 };
 xhr.send();
-Example using fetch():
+Use Case:
 
-JavaScript
-fetch('https://api.example.com/data')
+Dynamic content loading (e.g., new feeds, weather updates).
+
+28. What are the advantages and disadvantages of using AJAX?
+
+Advantages	Disadvantages
+No full page reload	Can complicate browser history
+Better UX with dynamic updates	SEO can suffer
+Faster interactions	Needs careful error handling
+Use Case:
+
+Infinite scrolling feeds, dynamic forms.
+
+29. What are the differences between XMLHttpRequest and fetch() in JavaScript and browsers?
+
+Feature	XMLHttpRequest	fetch()
+Syntax	Verbose	Cleaner, promise-based
+Streams	Harder	Native ReadableStream
+Error Handling	Manual	Built-in .catch() chaining
+Example (fetch):
+
+javascript
+Copy
+Edit
+fetch('/api/data')
   .then(response => response.json())
   .then(data => console.log(data))
   .catch(error => console.error('Error:', error));
-**Q: What are the various data types in JavaScript?**
-A: JavaScript has the following data types:
+Use Case:
 
-Primitive: string, number, boolean, null, undefined, symbol, bigint
-Non-primitive: object (e.g., arrays, functions, etc.)
-Example:
+Always prefer fetch() unless supporting very old browsers.
 
-JavaScript
-**// Primitive types**
-const name = 'John'; // string
-const age = 30;      // number
-const isAdmin = true; // boolean
-const nothing = null; // null
-let notDefined;      // undefined
-const uniqueId = Symbol('id'); // symbol
-const largeNumber = 123456789012345678901234567890n; // bigint
+30. How do you abort a web request using AbortController in JavaScript?
+Explanation:
 
-**// Non-primitive type**
-const user = { name: 'John', age: 30 }; // object
-Q: What language constructs do you use for iterating over object properties and array items in JavaScript?
-A: For arrays, you can use for, for...of, or forEach(). For objects, you can use for...in or Object.keys() combined with iteration methods like map().
-
-Examples:
-
-JavaScript
-**// Iterating over an array**
-const array = [1, 2, 3];
-array.forEach(item => console.log(item));
-
-// Iterating over an object
-const obj = { a: 1, b: 2, c: 3 };
-for (const key in obj) {
-  console.log(`${key}: ${obj[key]}`);
-}
-**Q: What are the benefits of using spread syntax in JavaScript and how is it different from rest syntax?**
-A: Spread syntax (...) is used to expand elements of an array/object, while rest syntax is used to collect remaining elements into an array/object. Spread is useful for merging or copying, while rest is useful for destructuring.
+AbortController provides a way to abort ongoing fetch requests.
 
 Example:
 
-JavaScript
-// Spread syntax
-const arr1 = [1, 2, 3];
-const arr2 = [...arr1, 4, 5]; // [1, 2, 3, 4, 5]
-
-// Rest syntax
-const [first, ...rest] = arr2; // first = 1, rest = [2, 3, 4, 5]
-Intermediate Questions
-**Q: How do you abort a web request using AbortController in JavaScript?**
-A: AbortController provides a signal that can be passed to a fetch request via its signal option. You can abort the request by calling the abort() method on the controller instance.
-
-Example:
-
-JavaScript
+javascript
+Copy
+Edit
 const controller = new AbortController();
-const { signal } = controller;
+const signal = controller.signal;
 
-fetch('https://api.example.com/data', { signal })
+fetch('/api/data', { signal })
   .then(response => response.json())
   .then(data => console.log(data))
   .catch(error => {
     if (error.name === 'AbortError') {
-      console.log('Request aborted');
-    } else {
-      console.error('Error:', error);
+      console.log('Fetch aborted');
     }
   });
 
-// Abort the request after 1 second
+// Abort after 1 second
 setTimeout(() => controller.abort(), 1000);
-**Q: Explain the differences between CommonJS modules and ES modules in JavaScript**
-A: CommonJS modules (require) are synchronous and used in Node.js. ES modules (import/export) are asynchronous, modern, and work natively in browsers.
+Use Case:
+
+Cancel fetch when users navigate away or switch pages.
+
+31. What are JavaScript polyfills for?
+Explanation:
+
+Polyfills are pieces of code (often libraries) that implement features on older browsers that do not natively support them.
 
 Example:
 
-JavaScript
+javascript
+Copy
+Edit
+if (!Array.prototype.includes) {
+  Array.prototype.includes = function(searchElement) {
+    return this.indexOf(searchElement) !== -1;
+  };
+}
+Use Case:
+
+Ensure backward compatibility for modern JS features.
+
+32. Why is extending built-in JavaScript objects not a good idea?
+Explanation:
+
+Extending built-in prototypes (like Array.prototype, Object.prototype) can cause conflicts with future JavaScript features or other libraries.
+
+Example:
+
+javascript
+Copy
+Edit
+// BAD Practice
+Array.prototype.customMethod = function() { };
+Use Case:
+
+Avoid prototype pollution and bugs caused by unexpected behavior.
+
+33. Why is it a good idea to leave the global JavaScript scope untouched?
+Explanation:
+
+Modifying global scope increases the risk of name collisions and hard-to-debug bugs.
+
+Example:
+
+javascript
+Copy
+Edit
+// BAD: Overwriting native objects or window properties
+window.alert = function() {
+  console.log('Hacked alert!');
+};
+Best Practice:
+
+Use modules, IIFE (Immediately Invoked Function Expressions) to limit scope.
+
+34. Explain the differences between CommonJS modules and ES modules in JavaScript
+
+Feature	CommonJS	ES Modules
+Syntax	require() / module.exports	import / export
+Loading	Synchronous	Asynchronous
+Used in	Node.js mainly	Modern browsers + Node.js
+Example:
+
+javascript
+Copy
+Edit
 // CommonJS
-const module = require('module');
-module.doSomething();
+const fs = require('fs');
 
-// ES Modules
-import { doSomething } from './module.js';
-doSomething();
+// ES Module
+import fs from 'fs';
+Use Case:
 
+Use ES Modules in front-end or modern back-end codebases.
 
+35. What are the various data types in JavaScript?
 
-# JavaScript Questions and Answers
+Primitive Types	Non-Primitive Types
+Number	Object
+String	Array
+Boolean	Function
+Null	Date
+Undefined	RegExp
+Symbol	
+BigInt	
+36. What language constructs do you use for iterating over object properties and array items in JavaScript?
+Explanation:
 
-**## 41. What are the differences between Map/Set and WeakMap/WeakSet in JavaScript? *(Basic)***
+Arrays: for, for...of, forEach()
 
-- **Map/Set**:
-  - **Map** stores key-value pairs, while **Set** stores unique values.
-  - Keys in **Map** can be any data type.
-  - Both are iterable, allowing you to loop through their elements.
-
-- **WeakMap/WeakSet**:
-  - **WeakMap** holds key-value pairs where keys are objects, and values can be any type.
-  - **WeakSet** holds a collection of objects, and no primitive values are allowed.
-  - They do not prevent garbage collection of their keys (or objects in the set).
-  - They are not iterable.
-
----
-
-## 42. Why might you want to create static class members in JavaScript? *(Intermediate)*
-
-Static class members:
-- Belong to the class itself, not to instances of the class.
-- Are used for utility functions or shared data that do not depend on instance-specific data, such as configuration settings or cache management.
+Objects: for...in, Object.keys(), Object.entries()
 
 Example:
-```javascript
-class Example {
-  static staticMethod() {
-    return 'This is a static method!';
-  }
+
+javascript
+Copy
+Edit
+// Array
+for (const item of ['a', 'b', 'c']) {
+  console.log(item);
 }
 
-console.log(Example.staticMethod()); // Outputs: This is a static method!
-**43. What are Symbols used for in JavaScript? (Intermediate)**
-Symbols are unique and immutable data types used as keys for object properties.
-They prevent property name collisions in objects and allow creating hidden properties that won't interfere with other code.
+// Object
+const obj = { a: 1, b: 2 };
+for (const key in obj) {
+  console.log(key, obj[key]);
+}
+37. What are the benefits of using spread syntax in JavaScript and how is it different from rest syntax?
+Explanation:
+
+Spread (...) expands elements.
+
+Rest (...) collects elements.
+
 Example:
 
-JavaScript
-const uniqueKey = Symbol('description');
-const obj = {
-  [uniqueKey]: 'value'
-};
+javascript
+Copy
+Edit
+// Spread
+const arr = [1, 2, 3];
+const newArr = [...arr, 4, 5];
 
-console.log(obj[uniqueKey]); // Outputs: 'value'
-**44. What are server-sent events? (Advanced)**
-Server-Sent Events (SSE) enable servers to push real-time updates to the browser over a single HTTP connection.
-They are implemented using the EventSource API.
-Commonly used for live updates, like news feeds or stock prices.
+// Rest
+function sum(...args) {
+  return args.reduce((acc, val) => acc + val, 0);
+}
+Use Case:
+
+Spread for cloning/merging, Rest for collecting function arguments.
+
+38. What are iterators and generators in JavaScript and what are they used for?
+
+Concept	Description
+Iterator	Object with next() method
+Generator	Function that yields multiple values
+Example (Generator):
+
+javascript
+Copy
+Edit
+function* generateNumbers() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+const gen = generateNumbers();
+console.log(gen.next()); // { value: 1, done: false }
+Use Case:
+
+Custom sequence generation, lazy evaluation.
+
+39. Explain the difference between mutable and immutable objects in JavaScript
+
+Aspect	Mutable	Immutable
+Change allowed	Yes	No
+Example	Arrays, Objects	Strings, Numbers (primitive)
 Example:
 
-JavaScript
-const eventSource = new EventSource('https://example.com/events');
-eventSource.onmessage = (event) => {
-  console.log(event.data);
-};
-**45. What are JavaScript object property flags and descriptors? (Advanced)**
-Property flags and descriptors provide metadata about object properties.
-Flags include:
-writable – If true, the value can be changed.
-enumerable – If true, the property shows up in loops.
-configurable – If true, the property can be deleted or modified.
+javascript
+Copy
+Edit
+const arr = [1,2,3];
+arr.push(4); // Mutated
+
+const str = 'hello';
+const newStr = str + ' world'; // New string created
+40. What is the difference between a Map object and a plain object in JavaScript?
+
+Feature	Map	Plain Object
+Key Types	Any (including objects)	Strings and Symbols only
+Iteration Order	Ordered	Unordered (older engines)
+Size	size property	Manual calculation needed
 Example:
 
-JavaScript
-const obj = {};
-Object.defineProperty(obj, 'prop', {
-  value: 42,
-  writable: false,
-  enumerable: true,
-  configurable: true
-});
+javascript
+Copy
+Edit
+const map = new Map();
+map.set('key', 'value');
+map.set({}, 'object key');
 
-console.log(obj.prop); // Outputs: 42
-**46. What are JavaScript object getters and setters for? (Intermediate)**
-Getters retrieve property values, while setters define custom behavior when setting property values.
-Useful for encapsulating logic behind property access.
-Example:
+const obj = { key: 'value' };
+Use Case:
 
-JavaScript
-const obj = {
-  _value: 0,
-  get value() {
-    return this._value;
-  },
-  set value(newValue) {
-    this._value = newValue > 0 ? newValue : 0;
-  }
-};
-
-obj.value = 10;
-console.log(obj.value); // Outputs: 10
-**47. What are proxies in JavaScript used for? (Advanced)**
-Proxies allow you to intercept and customize operations on objects, such as property access or assignment.
-Useful for validation, logging, or implementing reactive programming.
-Example:
-
-JavaScript
-const handler = {
-  get(target, prop) {
-    return prop in target ? target[prop] : 'Property does not exist';
-  }
-};
-
-const proxy = new Proxy({}, handler);
-proxy.name = 'JavaScript';
-console.log(proxy.name); // Outputs: 'JavaScript'
-console.log(proxy.age);  // Outputs: 'Property does not exist'
-**48. What tools and techniques do you use for debugging JavaScript code? (Intermediate)**
-Tools:
-
-Browser Developer Tools (Chrome, Firefox, etc.)
-Debugging in IDEs like VSCode
-Online tools like JSFiddle or CodePen
-Techniques:
-
-Using console.log() for quick debugging.
-Setting breakpoints in Developer Tools.
-Leveraging the debugger keyword.
-Writing unit tests to catch bugs early.
-**49. What are workers in JavaScript used for? (Advanced)**
-Workers enable running JavaScript code in background threads, separate from the main execution thread.
-They improve performance by handling CPU-intensive tasks without blocking the UI.
-Example:
-
-JavaScript
-const worker = new Worker('worker.js');
-worker.onmessage = (event) => {
-  console.log(event.data);
-};
-worker.postMessage('Start');
-**50. How does JavaScript garbage collection work? (Advanced)**
-JavaScript uses automatic garbage collection to manage memory.
-The engine identifies and removes objects that are no longer reachable (e.g., out of scope or unreferenced).
-Common algorithms:
-Mark-and-Sweep: Marks objects reachable from the root, then sweeps and collects unmarked objects.
+Use Map when keys are unknown or complex.
