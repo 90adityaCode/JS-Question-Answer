@@ -359,3 +359,135 @@ console.log("Sync call");
 Sync call
 Async call
 ```
+# Q&A Section
+
+## Basic Questions
+
+**Q: Explain the difference between synchronous and asynchronous functions in JavaScript**  
+A: Synchronous functions execute code sequentially, meaning each operation must complete before the next one starts. Asynchronous functions allow code execution to continue without waiting for a task to complete, often using callbacks, promises, or async/await syntax.
+
+Example:  
+```javascript
+// Synchronous example
+console.log('Start');
+console.log('Middle');
+console.log('End');
+
+// Asynchronous example
+console.log('Start');
+setTimeout(() => console.log('Middle'), 1000); // Executes after 1 second
+console.log('End');
+
+Q: Explain AJAX in as much detail as possible
+A: AJAX (Asynchronous JavaScript and XML) is a technique for creating dynamic web applications. It allows fetching data from a server asynchronously, meaning the web page does not reload or refresh during the data fetch. AJAX uses technologies like XMLHttpRequest or fetch() to send and receive data, often in JSON format.
+
+Example using fetch():
+
+JavaScript
+fetch('https://api.example.com/data')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+Q: What are the differences between XMLHttpRequest and fetch() in JavaScript and browsers?
+A: XMLHttpRequest is an older API for making HTTP requests, supporting event-based callbacks. fetch() is a modern API that simplifies request handling using promises and provides better readability and error handling.
+
+Example using XMLHttpRequest:
+
+JavaScript
+const xhr = new XMLHttpRequest();
+xhr.open('GET', 'https://api.example.com/data', true);
+xhr.onload = function () {
+  if (xhr.status === 200) {
+    console.log(JSON.parse(xhr.responseText));
+  }
+};
+xhr.send();
+Example using fetch():
+
+JavaScript
+fetch('https://api.example.com/data')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+Q: What are the various data types in JavaScript?
+A: JavaScript has the following data types:
+
+Primitive: string, number, boolean, null, undefined, symbol, bigint
+Non-primitive: object (e.g., arrays, functions, etc.)
+Example:
+
+JavaScript
+// Primitive types
+const name = 'John'; // string
+const age = 30;      // number
+const isAdmin = true; // boolean
+const nothing = null; // null
+let notDefined;      // undefined
+const uniqueId = Symbol('id'); // symbol
+const largeNumber = 123456789012345678901234567890n; // bigint
+
+// Non-primitive type
+const user = { name: 'John', age: 30 }; // object
+Q: What language constructs do you use for iterating over object properties and array items in JavaScript?
+A: For arrays, you can use for, for...of, or forEach(). For objects, you can use for...in or Object.keys() combined with iteration methods like map().
+
+Examples:
+
+JavaScript
+// Iterating over an array
+const array = [1, 2, 3];
+array.forEach(item => console.log(item));
+
+// Iterating over an object
+const obj = { a: 1, b: 2, c: 3 };
+for (const key in obj) {
+  console.log(`${key}: ${obj[key]}`);
+}
+Q: What are the benefits of using spread syntax in JavaScript and how is it different from rest syntax?
+A: Spread syntax (...) is used to expand elements of an array/object, while rest syntax is used to collect remaining elements into an array/object. Spread is useful for merging or copying, while rest is useful for destructuring.
+
+Example:
+
+JavaScript
+// Spread syntax
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1, 4, 5]; // [1, 2, 3, 4, 5]
+
+// Rest syntax
+const [first, ...rest] = arr2; // first = 1, rest = [2, 3, 4, 5]
+Intermediate Questions
+Q: How do you abort a web request using AbortController in JavaScript?
+A: AbortController provides a signal that can be passed to a fetch request via its signal option. You can abort the request by calling the abort() method on the controller instance.
+
+Example:
+
+JavaScript
+const controller = new AbortController();
+const { signal } = controller;
+
+fetch('https://api.example.com/data', { signal })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => {
+    if (error.name === 'AbortError') {
+      console.log('Request aborted');
+    } else {
+      console.error('Error:', error);
+    }
+  });
+
+// Abort the request after 1 second
+setTimeout(() => controller.abort(), 1000);
+Q: Explain the differences between CommonJS modules and ES modules in JavaScript
+A: CommonJS modules (require) are synchronous and used in Node.js. ES modules (import/export) are asynchronous, modern, and work natively in browsers.
+
+Example:
+
+JavaScript
+// CommonJS
+const module = require('module');
+module.doSomething();
+
+// ES Modules
+import { doSomething } from './module.js';
+doSomething();
