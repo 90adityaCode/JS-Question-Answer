@@ -378,7 +378,7 @@ console.log('Start');
 setTimeout(() => console.log('Middle'), 1000); // Executes after 1 second
 console.log('End');
 
-Q: Explain AJAX in as much detail as possible
+##Q: **Explain AJAX in as much detail as possible** **
 A: AJAX (Asynchronous JavaScript and XML) is a technique for creating dynamic web applications. It allows fetching data from a server asynchronously, meaning the web page does not reload or refresh during the data fetch. AJAX uses technologies like XMLHttpRequest or fetch() to send and receive data, often in JSON format.
 
 Example using fetch():
@@ -388,7 +388,7 @@ fetch('https://api.example.com/data')
   .then(response => response.json())
   .then(data => console.log(data))
   .catch(error => console.error('Error:', error));
-Q: What are the differences between XMLHttpRequest and fetch() in JavaScript and browsers?
+##Q: **What are the differences between XMLHttpRequest and fetch() in JavaScript and browsers?**
 A: XMLHttpRequest is an older API for making HTTP requests, supporting event-based callbacks. fetch() is a modern API that simplifies request handling using promises and provides better readability and error handling.
 
 Example using XMLHttpRequest:
@@ -409,7 +409,7 @@ fetch('https://api.example.com/data')
   .then(response => response.json())
   .then(data => console.log(data))
   .catch(error => console.error('Error:', error));
-Q: What are the various data types in JavaScript?
+**Q: What are the various data types in JavaScript?**
 A: JavaScript has the following data types:
 
 Primitive: string, number, boolean, null, undefined, symbol, bigint
@@ -417,7 +417,7 @@ Non-primitive: object (e.g., arrays, functions, etc.)
 Example:
 
 JavaScript
-// Primitive types
+**// Primitive types**
 const name = 'John'; // string
 const age = 30;      // number
 const isAdmin = true; // boolean
@@ -426,7 +426,7 @@ let notDefined;      // undefined
 const uniqueId = Symbol('id'); // symbol
 const largeNumber = 123456789012345678901234567890n; // bigint
 
-// Non-primitive type
+**// Non-primitive type**
 const user = { name: 'John', age: 30 }; // object
 Q: What language constructs do you use for iterating over object properties and array items in JavaScript?
 A: For arrays, you can use for, for...of, or forEach(). For objects, you can use for...in or Object.keys() combined with iteration methods like map().
@@ -434,7 +434,7 @@ A: For arrays, you can use for, for...of, or forEach(). For objects, you can use
 Examples:
 
 JavaScript
-// Iterating over an array
+**// Iterating over an array**
 const array = [1, 2, 3];
 array.forEach(item => console.log(item));
 
@@ -443,7 +443,7 @@ const obj = { a: 1, b: 2, c: 3 };
 for (const key in obj) {
   console.log(`${key}: ${obj[key]}`);
 }
-Q: What are the benefits of using spread syntax in JavaScript and how is it different from rest syntax?
+**Q: What are the benefits of using spread syntax in JavaScript and how is it different from rest syntax?**
 A: Spread syntax (...) is used to expand elements of an array/object, while rest syntax is used to collect remaining elements into an array/object. Spread is useful for merging or copying, while rest is useful for destructuring.
 
 Example:
@@ -456,7 +456,7 @@ const arr2 = [...arr1, 4, 5]; // [1, 2, 3, 4, 5]
 // Rest syntax
 const [first, ...rest] = arr2; // first = 1, rest = [2, 3, 4, 5]
 Intermediate Questions
-Q: How do you abort a web request using AbortController in JavaScript?
+**Q: How do you abort a web request using AbortController in JavaScript?**
 A: AbortController provides a signal that can be passed to a fetch request via its signal option. You can abort the request by calling the abort() method on the controller instance.
 
 Example:
@@ -478,7 +478,7 @@ fetch('https://api.example.com/data', { signal })
 
 // Abort the request after 1 second
 setTimeout(() => controller.abort(), 1000);
-Q: Explain the differences between CommonJS modules and ES modules in JavaScript
+**Q: Explain the differences between CommonJS modules and ES modules in JavaScript**
 A: CommonJS modules (require) are synchronous and used in Node.js. ES modules (import/export) are asynchronous, modern, and work natively in browsers.
 
 Example:
@@ -491,3 +491,141 @@ module.doSomething();
 // ES Modules
 import { doSomething } from './module.js';
 doSomething();
+
+
+
+# JavaScript Questions and Answers
+
+**## 41. What are the differences between Map/Set and WeakMap/WeakSet in JavaScript? *(Basic)***
+
+- **Map/Set**:
+  - **Map** stores key-value pairs, while **Set** stores unique values.
+  - Keys in **Map** can be any data type.
+  - Both are iterable, allowing you to loop through their elements.
+
+- **WeakMap/WeakSet**:
+  - **WeakMap** holds key-value pairs where keys are objects, and values can be any type.
+  - **WeakSet** holds a collection of objects, and no primitive values are allowed.
+  - They do not prevent garbage collection of their keys (or objects in the set).
+  - They are not iterable.
+
+---
+
+## 42. Why might you want to create static class members in JavaScript? *(Intermediate)*
+
+Static class members:
+- Belong to the class itself, not to instances of the class.
+- Are used for utility functions or shared data that do not depend on instance-specific data, such as configuration settings or cache management.
+
+Example:
+```javascript
+class Example {
+  static staticMethod() {
+    return 'This is a static method!';
+  }
+}
+
+console.log(Example.staticMethod()); // Outputs: This is a static method!
+**43. What are Symbols used for in JavaScript? (Intermediate)**
+Symbols are unique and immutable data types used as keys for object properties.
+They prevent property name collisions in objects and allow creating hidden properties that won't interfere with other code.
+Example:
+
+JavaScript
+const uniqueKey = Symbol('description');
+const obj = {
+  [uniqueKey]: 'value'
+};
+
+console.log(obj[uniqueKey]); // Outputs: 'value'
+**44. What are server-sent events? (Advanced)**
+Server-Sent Events (SSE) enable servers to push real-time updates to the browser over a single HTTP connection.
+They are implemented using the EventSource API.
+Commonly used for live updates, like news feeds or stock prices.
+Example:
+
+JavaScript
+const eventSource = new EventSource('https://example.com/events');
+eventSource.onmessage = (event) => {
+  console.log(event.data);
+};
+**45. What are JavaScript object property flags and descriptors? (Advanced)**
+Property flags and descriptors provide metadata about object properties.
+Flags include:
+writable – If true, the value can be changed.
+enumerable – If true, the property shows up in loops.
+configurable – If true, the property can be deleted or modified.
+Example:
+
+JavaScript
+const obj = {};
+Object.defineProperty(obj, 'prop', {
+  value: 42,
+  writable: false,
+  enumerable: true,
+  configurable: true
+});
+
+console.log(obj.prop); // Outputs: 42
+**46. What are JavaScript object getters and setters for? (Intermediate)**
+Getters retrieve property values, while setters define custom behavior when setting property values.
+Useful for encapsulating logic behind property access.
+Example:
+
+JavaScript
+const obj = {
+  _value: 0,
+  get value() {
+    return this._value;
+  },
+  set value(newValue) {
+    this._value = newValue > 0 ? newValue : 0;
+  }
+};
+
+obj.value = 10;
+console.log(obj.value); // Outputs: 10
+**47. What are proxies in JavaScript used for? (Advanced)**
+Proxies allow you to intercept and customize operations on objects, such as property access or assignment.
+Useful for validation, logging, or implementing reactive programming.
+Example:
+
+JavaScript
+const handler = {
+  get(target, prop) {
+    return prop in target ? target[prop] : 'Property does not exist';
+  }
+};
+
+const proxy = new Proxy({}, handler);
+proxy.name = 'JavaScript';
+console.log(proxy.name); // Outputs: 'JavaScript'
+console.log(proxy.age);  // Outputs: 'Property does not exist'
+**48. What tools and techniques do you use for debugging JavaScript code? (Intermediate)**
+Tools:
+
+Browser Developer Tools (Chrome, Firefox, etc.)
+Debugging in IDEs like VSCode
+Online tools like JSFiddle or CodePen
+Techniques:
+
+Using console.log() for quick debugging.
+Setting breakpoints in Developer Tools.
+Leveraging the debugger keyword.
+Writing unit tests to catch bugs early.
+**49. What are workers in JavaScript used for? (Advanced)**
+Workers enable running JavaScript code in background threads, separate from the main execution thread.
+They improve performance by handling CPU-intensive tasks without blocking the UI.
+Example:
+
+JavaScript
+const worker = new Worker('worker.js');
+worker.onmessage = (event) => {
+  console.log(event.data);
+};
+worker.postMessage('Start');
+**50. How does JavaScript garbage collection work? (Advanced)**
+JavaScript uses automatic garbage collection to manage memory.
+The engine identifies and removes objects that are no longer reachable (e.g., out of scope or unreferenced).
+Common algorithms:
+Mark-and-Sweep: Marks objects reachable from the root, then sweeps and collects unmarked objects.
